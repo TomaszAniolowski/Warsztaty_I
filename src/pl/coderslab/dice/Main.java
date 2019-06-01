@@ -1,6 +1,7 @@
 package pl.coderslab.dice;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -8,8 +9,9 @@ public class Main {
     public static void main(String[] args) {
         startInf();
         int[] parameters = getParam();
-
-        System.out.println(Arrays.toString(parameters));
+        diceRollsInf(parameters);
+        int result = diceRolls(parameters);
+        System.out.println(result);
     }
 
     // start informations
@@ -131,6 +133,32 @@ public class Main {
             parameters[2] = Integer.parseInt(lineParts[1]);
         else if ( z.equals("-") )
             parameters[2] = -Integer.parseInt(lineParts[1]);
+    }
+
+    // print retrieved information
+    private static void diceRollsInf (int[] parameters){
+        System.out.println();
+        System.out.println("Number of dice rolls: " + parameters[0]);
+        System.out.println("Number of dice walls: " + parameters[1]);
+        System.out.println("Optional value to result: " + parameters[2]);
+    }
+
+    // dice rolls
+    private static int diceRolls(int[] parameters){
+        int result = 0;
+        for (int i = 0; i < parameters[0]; i++) {
+            result += oneDiceRoll(parameters[1], i+1);
+        }
+        System.out.println(parameters[2]);
+        return result + parameters[2];
+    }
+
+    // single dice roll
+    private static int oneDiceRoll(int walls, int counter){
+        Random diceRoll = new Random();
+        int roll = diceRoll.nextInt(walls)+1;
+        System.out.println("Dice roll " + counter + ": " + roll);
+        return roll;
     }
 
 }
